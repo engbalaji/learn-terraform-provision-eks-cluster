@@ -15,7 +15,7 @@ data "aws_availability_zones" "available" {
 }
 
 locals {
-  cluster_name = "education-eks-${random_string.suffix.result}"
+  cluster_name = "petest1-eks-${random_string.suffix.result}"
 }
 
 resource "random_string" "suffix" {
@@ -27,22 +27,24 @@ module "vpc" {
   source  = "terraform-aws-modules/vpc/aws"
   version = "5.0.0"
 
-  name = "education-vpc"
+  name = "vpc-b30658d4"
 
-  cidr = "10.0.0.0/16"
+  cidr = "10.254.0.0/20"
   azs  = slice(data.aws_availability_zones.available.names, 0, 3)
 
-  private_subnets = ["10.0.1.0/24", "10.0.2.0/24", "10.0.3.0/24"]
-  public_subnets  = ["10.0.4.0/24", "10.0.5.0/24", "10.0.6.0/24"]
+  private_subnets = ["10.254.12.0/22", "10.254.0.0/21"]
+  #public_subnets  = ["10.0.4.0/24", "10.0.5.0/24", "10.0.6.0/24"]
+
+  
 
   enable_nat_gateway   = true
   single_nat_gateway   = true
   enable_dns_hostnames = true
 
-  public_subnet_tags = {
-    "kubernetes.io/cluster/${local.cluster_name}" = "shared"
-    "kubernetes.io/role/elb"                      = 1
-  }
+#  public_subnet_tags = {
+#   "kubernetes.io/cluster/${local.cluster_name}" = "shared"
+#    "kubernetes.io/role/elb"                      = 1
+#  }
 
   private_subnet_tags = {
     "kubernetes.io/cluster/${local.cluster_name}" = "shared"
@@ -59,16 +61,18 @@ module "eks" {
 
   vpc_id                         = module.vpc.vpc_id
   subnet_ids                     = module.vpc.private_subnets
-  cluster_endpoint_public_access = true
+  cluster_endpoint_public_access = false
 
   eks_managed_node_group_defaults = {
     ami_type = "AL2_x86_64"
+    ami_release_version = "1.27.0"
+    disk_size = 30 # in GB
 
   }
 
   eks_managed_node_groups = {
     one = {
-      name = "node-group-1"
+      name = "petest1-node-group-1"
 
       instance_types = ["t3.small"]
 
@@ -78,7 +82,7 @@ module "eks" {
     }
 
     two = {
-      name = "node-group-2"
+      name = "petest1-node-group-2"
 
       instance_types = ["t3.small"]
 
