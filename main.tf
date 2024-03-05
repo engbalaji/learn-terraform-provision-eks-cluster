@@ -7,6 +7,7 @@ provider "aws" {
 
 # Filter out local zones, which are not currently supported 
 # with managed node groups
+
 data "aws_availability_zones" "available" {
   filter {
     name   = "opt-in-status"
@@ -31,25 +32,31 @@ module "eks" {
   cluster_version = "1.27"
 
   vpc_id                         = "vpc-b30658d4"
-  endpoint_private_access = true
-  endpoint_public_access  = false
-  security_group_ids      = ["sg-02cd5c886d8b07682"]
-  subnet_ids                     = ["subnet-89eb03a4", "subnet-b64d14ff"]
-  cluster_endpoint_public_access = false
+  subnets                        = ["subnet-89eb03a4", "subnet-b64d14ff"]
+  cluster_endpoint_private_access = true
+  cluster_endpoint_public_access  = false
+  cluster_ip_family              = "ipv4"
+  cluster_enabled_log_types = ["api", "audit", "authenticator", "controllerManager", "scheduler"]
+
+  # EKS Managed Node Group(s)
+  # https://github.com/terraform-aws-modules/terraform-aws-eks/blob/master/docs/managed_node_groups.md
 
   eks_managed_node_group_defaults = {
     ami_type = "AL2_x86_64"
     ami_release_version = "1.27.0"
     disk_size = 30 # in GB
+    vpc_security_group_ids = ["sg-02cd5c886d8b07682"]
+    instance_types = ["t3.small"]
+    capacity_type  = "ON_DEMAND"
+    force_update_version = true
 
   }
 
   eks_managed_node_groups = {
     one = {
       name = "petest1-node-group-1"
-
       instance_types = ["t3.small"]
-
+      
       min_size     = 1
       max_size     = 3
       desired_size = 2
@@ -57,7 +64,6 @@ module "eks" {
 
     two = {
       name = "petest1-node-group-2"
-
       instance_types = ["t3.small"]
 
       min_size     = 1
