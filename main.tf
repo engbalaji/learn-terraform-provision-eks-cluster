@@ -23,35 +23,6 @@ resource "random_string" "suffix" {
   special = false
 }
 
-module "vpc" {
-  source  = "terraform-aws-modules/vpc/aws"
-  version = "5.0.0"
-
-  name = "vpc-b30658d4"
-
-  cidr = "10.254.0.0/20"
-  azs  = slice(data.aws_availability_zones.available.names, 0, 3)
-
-  private_subnets = ["10.254.12.0/22", "10.254.0.0/21"]
-  #public_subnets  = ["10.0.4.0/24", "10.0.5.0/24", "10.0.6.0/24"]
-
-  
-
-  #enable_nat_gateway   = true
-  #single_nat_gateway   = true
-  enable_dns_hostnames = true
-
-#  public_subnet_tags = {
-#   "kubernetes.io/cluster/${local.cluster_name}" = "shared"
-#    "kubernetes.io/role/elb"                      = 1
-#  }
-
-  private_subnet_tags = {
-    "kubernetes.io/cluster/${local.cluster_name}" = "shared"
-    "kubernetes.io/role/internal-elb"             = 1
-  }
-}
-
 module "eks" {
   source  = "terraform-aws-modules/eks/aws"
   version = "19.15.3"
@@ -59,8 +30,11 @@ module "eks" {
   cluster_name    = local.cluster_name
   cluster_version = "1.27"
 
-  vpc_id                         = module.vpc.vpc_id
-  subnet_ids                     = module.vpc.private_subnets
+  vpc_id                         = "vpc-b30658d4"
+  endpoint_private_access = true
+  endpoint_public_access  = false
+  security_group_ids      = ["sg-02cd5c886d8b07682"]
+  subnet_ids                     = ["subnet-89eb03a4", "subnet-b64d14ff"]
   cluster_endpoint_public_access = false
 
   eks_managed_node_group_defaults = {
