@@ -31,11 +31,13 @@ module "eks" {
   cluster_name    = local.cluster_name
   cluster_version = "1.27"
 
-  vpc_id                         = "vpc-b30658d4"
-  cluster_endpoint_private_access = true
-  cluster_endpoint_public_access  = false
-  cluster_ip_family              = "ipv4"
+  vpc_id                  = "vpc-b30658d4"
+  endpoint_private_access = true
+  endpoint_public_access  = false
+  cluster_ip_family       = "ipv4"
   cluster_enabled_log_types = ["api", "audit", "authenticator", "controllerManager", "scheduler"]
+  security_group_ids = ["sg-02cd5c886d8b07682"]
+  subnet_ids = ["subnet-89eb03a4", "subnet-b64d14ff"]
 
   # EKS Managed Node Group(s)
   # https://github.com/terraform-aws-modules/terraform-aws-eks/blob/master/docs/managed_node_groups.md
@@ -44,8 +46,8 @@ module "eks" {
     ami_type = "AL2_x86_64"
     ami_release_version = "1.27.0"
     disk_size = 30 # in GB
-    vpc_security_group_ids = ["sg-02cd5c886d8b07682"]
-    subnets = ["subnet-89eb03a4", "subnet-b64d14ff"]
+    #vpc_security_group_ids = ["sg-02cd5c886d8b07682"]
+    #subnets = ["subnet-89eb03a4", "subnet-b64d14ff"]
     instance_types = ["t3.small"]
     capacity_type  = "ON_DEMAND"
     force_update_version = true
