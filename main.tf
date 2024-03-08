@@ -46,7 +46,7 @@ module "eks" {
     ami_release_version = "1.27.0"
     disk_size = 30 # in GB
     vpc_security_group_ids = ["sg-02cd5c886d8b07682"]
-    subnets = ["subnet-89eb03a4", "subnet-b64d14ff"]
+    subnet_ids = ["subnet-89eb03a4", "subnet-b64d14ff"]
     instance_types = ["t3.small"]
     capacity_type  = "ON_DEMAND"
     force_update_version = true
