@@ -36,6 +36,7 @@ module "eks" {
   #endpoint_public_access  = false
   cluster_ip_family       = "ipv4"
   cluster_enabled_log_types = ["api", "audit", "authenticator", "controllerManager", "scheduler"]
+  vpc_security_group_ids = ["sg-02cd5c886d8b07682"]
 
 
   # EKS Managed Node Group(s)
