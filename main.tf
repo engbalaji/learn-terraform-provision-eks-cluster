@@ -72,11 +72,3 @@ resource "aws_eks_node_group" "example_nodes" {
     }
   }
 }
-
-#create node group 2
-resource "aws_eks_node_group" "example_nodes2" {
-  cluster_name    = "PEPOC-EKS-Cluster"
-" # Replace with your SSH key pair name
-  }
-}
-
