@@ -38,7 +38,4 @@ resource "aws_eks_node_group" "example_nodes" {
   node_group_name = "pe-nodegrp-1"
   node_role_arn   = "arn:aws:iam::960456129040:role/bmeks1-NodeInstanceRole-1AM6MX3S587QX"
   subnet_ids = ["subnet-89eb03a4", "subnet-c496e7e9", "subnet-b64d14ff" ] 
-  instance_type = "t2.medium"
-  min_size       = 1
-  max_size       = 2
 }
