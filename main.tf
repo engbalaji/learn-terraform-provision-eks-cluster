@@ -46,8 +46,6 @@ resource "aws_eks_node_group" "example_nodes" {
   ami = "ami-0df435f331839b2d6"
   instance_types = ["t2.micro"]
   iam_instance_profile = "arn:aws:iam::960456129040:instance-profile/bmeks1-NodeInstanceProfile-1QZ3Z3Z3Z3Z3Z"
-  ebs_volume_type = "gp2"
-  ebs_encrypted = true
   tags = {
     Name = "pe-nodegrp-1"
   }
