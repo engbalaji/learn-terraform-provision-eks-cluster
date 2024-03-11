@@ -37,18 +37,8 @@ resource "aws_eks_node_group" "example_nodes" {
   cluster_name    = "PEPOC-EKS-Cluster"
   node_group_name = "pe-nodegrp-1"
   node_role_arn   = "arn:aws:iam::960456129040:role/bmeks1-NodeInstanceRole-1AM6MX3S587QX"
-  subnet_ids = ["subnet-89eb03a4", "subnet-c496e7e9", "subnet-b64d14ff" ]
+  subnet_ids = ["subnet-89eb03a4", "subnet-c496e7e9", "subnet-b64d14ff" ] 
   instance_type = "t2.medium"
   min_size       = 1
   max_size       = 2
-  desired_size   = 1
-  ebs_size       = 20
-  ami = "ami-0df435f331839b2d6"
-  instance_types = ["t2.micro"]
-  iam_instance_profile = "arn:aws:iam::960456129040:instance-profile/bmeks1-NodeInstanceProfile-1QZ3Z3Z3Z3Z3Z"
-  tags = {
-    Name = "pe-nodegrp-1"
-  }
 }
-
-
