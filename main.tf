@@ -47,9 +47,36 @@ resource "aws_eks_node_group" "example_nodes" {
   }
 
   launch_template {
-    name          = "pe-nodegrp-1"
-    instance_type = "t2.micro"
-    ami_id     = "AL2_x86_64"
-    ec2_ssh_key = "bm-eks-key"
+    name_prefix = "pe-nodegrp-1"
+    
+    block_device_mappings {
+      device_name = "/dev/xvda"
+
+      ebs {
+        volume_size = 20
+        volume_type = "gp2"
+      }
+    }
+
+    capacity_type = "SPOT"  # Specify if you want On-Demand or Spot instances
+
+    instance_market_options {
+      market_type = "spot"
+      spot_options {
+        max_price = "0.20"  # Maximum price you are willing to pay for spot instances
+      }
+    }
+
+    remote_access {
+    ec2_key_pair = "Balaji Mariyappan" # Replace with your SSH key pair name
+    }
   }
 }
+
+#create node group 2
+resource "aws_eks_node_group" "example_nodes2" {
+  cluster_name    = "PEPOC-EKS-Cluster"
+" # Replace with your SSH key pair name
+  }
+}
+
