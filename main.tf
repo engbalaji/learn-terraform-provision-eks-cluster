@@ -80,4 +80,4 @@ resource "aws_eks_node_group" "example_nodes_2" {
     Name = "pepoc-nodegroup-2"
   }
 }
-}
+
