@@ -13,7 +13,7 @@ data "aws_vpc" "existing_vpc" {
 data "aws_subnet_ids" "existing_subnets" {
   vpc_id = data.aws_vpc.existing_vpc.id
   tags   = { Name = "your-subnet-tag" }
-  subnet_ids = ["subnet-89eb03a4", "subnet-c496e7e9", "subnet-b64d14ff" ]
+  #subnet_ids = ["subnet-89eb03a4", "subnet-c496e7e9", "subnet-b64d14ff" ]
 }
 
 data "aws_security_group" "existing_sg" {

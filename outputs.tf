@@ -1,22 +1,27 @@
-# Copyright (c) HashiCorp, Inc.
-# SPDX-License-Identifier: MPL-2.0
+# output.tf
 
-output "cluster_endpoint" {
-  description = "Endpoint for EKS control plane"
-  value       = "eks.cluster_endpoint"
+# Output the EKS cluster name
+output "eks_cluster_name" {
+  value = aws_eks_cluster.my_cluster.name
 }
 
-output "cluster_security_group_id" {
-  description = "Security group ids attached to the cluster control plane"
-  value       = "aws_security_group"
+# Output the EKS cluster endpoint URL
+output "eks_cluster_endpoint" {
+  value = aws_eks_cluster.my_cluster.endpoint
 }
 
-output "region" {
-  description = "AWS region"
-  value       = var.region
+# Output the EKS cluster security group IDs
+output "eks_cluster_security_groups" {
+  value = aws_eks_cluster.my_cluster.vpc_config[0].security_group_ids
 }
 
-output "cluster_name" {
-  description = "Kubernetes Cluster Name"
-  value       = "eks.cluster_name"
+# Output the EKS cluster worker node IAM role ARN
+output "eks_node_role_arn" {
+  value = aws_eks_cluster.my_cluster.node_groups[0].node_group_arn
+}
+
+# Additional outputs can be added as needed
+# For example, you can output the kubeconfig for kubectl access
+output "kubeconfig" {
+  value = aws_eks_cluster.my_cluster.kubeconfig
 }
