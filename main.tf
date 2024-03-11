@@ -46,7 +46,17 @@ resource "aws_eks_node_group" "example_nodes" {
     max_size     = 2
     min_size     = 1
   }
+  
+  remote_access {
+    ec2_ssh_key = "Balaji Mariyappan"
+  }
+
+  # Tag the nodes in the node group
+  tags = {
+    Name = "pepoc-nodegroup-1"
+  }
 }
+
 
 #create node group 2
 resource "aws_eks_node_group" "example_nodes_2" {
@@ -61,4 +71,13 @@ resource "aws_eks_node_group" "example_nodes_2" {
     max_size     = 2
     min_size     = 1
   }
+  remote_access {
+    ec2_ssh_key = "Balaji Mariyappan"
+  }
+
+  # Tag the nodes in the node group
+  tags = {
+    Name = "pepoc-nodegroup-2"
+  }
+}
 }
