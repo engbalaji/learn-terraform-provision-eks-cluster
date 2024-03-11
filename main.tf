@@ -59,16 +59,5 @@ resource "aws_eks_node_group" "example_nodes" {
     }
 
     capacity_type = "SPOT"  # Specify if you want On-Demand or Spot instances
-
-    instance_market_options {
-      market_type = "spot"
-      spot_options {
-        max_price = "0.20"  # Maximum price you are willing to pay for spot instances
-      }
-    }
-
-    remote_access {
-    ec2_key_pair = "Balaji Mariyappan" # Replace with your SSH key pair name
-    }
   }
 }
