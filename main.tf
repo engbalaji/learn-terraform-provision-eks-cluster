@@ -40,9 +40,27 @@ resource "aws_eks_node_group" "example_nodes" {
   subnet_ids = ["subnet-89eb03a4", "subnet-c496e7e9", "subnet-b64d14ff" ]
   capacity_type = "SPOT"
   
+  
   scaling_config {
-    desired_size = 2
-    max_size     = 3
+    desired_size = 1
+    max_size     = 2
     min_size     = 1
   }
+  tagnames = ["Name" = "pe-nodegrp-1"]
+}
+
+#create node group 2
+resource "aws_eks_node_group" "example_nodes_2" {
+  cluster_name    = "PEPOC-EKS-Cluster"
+  node_group_name = "pe-nodegrp-2"
+  node_role_arn   = "arn:aws:iam::960456129040:role/bmeks2-NodeInstanceRole-1AM6MX3S587QX"
+  subnet_ids = ["subnet-89eb03a4", "subnet-c496e7e9", "subnet-b64d14ff" ]
+  capacity_type = "SPOT"
+  
+  scaling_config {
+    desired_size = 1
+    max_size     = 2
+    min_size     = 1
+  }
+  tagnames = ["Name" = "pe-nodegrp-2"]
 }
