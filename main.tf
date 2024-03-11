@@ -45,48 +45,4 @@ resource "aws_eks_node_group" "example_nodes" {
     max_size     = 3
     min_size     = 1
   }
-
-    launch_template {
-    name_prefix = "example-launch-template"
-    
-    block_device_mappings {
-      device_name = "/dev/xvda"
-
-      ebs {
-        volume_size = 20
-        volume_type = "gp2"
-      }
-    }
-
-    instance_market_options {
-      market_type = "spot"
-      spot_options {
-        max_price = "0.20"  # Maximum price you are willing to pay for spot instances
-      }
-    }
-
-    tag_specifications {
-      resource_type = "instance"
-      tags = {
-        Name = "PE-POC-Node-1"
-      }
-    }
-
-    metadata_options {
-      http_endpoint               = "enabled"
-      http_tokens                 = "optional"
-    }
-
-    instance_types = ["t3.medium"]  # Specify the instance type(s) for the node group
-
-    user_data = <<-EOF
-                #!/bin/bash
-                echo "Hello, World!" > index.html
-                nohup busybox httpd -f -p 8080 &
-                EOF
-  }
-
-  remote_access {
-    ec2_ssh_key = "Balaji Mariyappan" # Replace with your SSH key pair name
-  }
 }
