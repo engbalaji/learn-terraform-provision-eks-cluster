@@ -46,7 +46,6 @@ resource "aws_eks_node_group" "example_nodes" {
     max_size     = 2
     min_size     = 1
   }
-  tagnames = ["Name" = "pe-nodegrp-1"]
 }
 
 #create node group 2
@@ -62,5 +61,4 @@ resource "aws_eks_node_group" "example_nodes_2" {
     max_size     = 2
     min_size     = 1
   }
-  tagnames = ["Name" = "pe-nodegrp-2"]
 }
