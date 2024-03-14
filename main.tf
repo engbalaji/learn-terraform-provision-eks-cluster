@@ -1,10 +1,5 @@
 # eks-cluster.tf
 
-#Provider information
-provider "aws" {
-  region = var.region
-}
-
 # Data sources for existing VPC, subnets, and security groups
 data "aws_vpc" "existing_vpc" {
   id = "vpc-b30658d4"
@@ -24,6 +19,11 @@ data "aws_security_group" "existing_sg" {
 resource "aws_eks_cluster" "my_cluster" {
   name     = "PEPOC-EKS-Cluster"
   role_arn = "arn:aws:iam::960456129040:role/AWS_EKS_Admin"
+  timeout  = "20m"
+  tags = {
+    Name = "PEPOC-EKS-Cluster"
+  }
+
 
   vpc_config {
     #subnet_ids = data.aws_subnet_ids.existing_subnets.ids
