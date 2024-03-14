@@ -19,7 +19,6 @@ data "aws_security_group" "existing_sg" {
 resource "aws_eks_cluster" "my_cluster" {
   name     = "PEPOC-EKS-Cluster"
   role_arn = "arn:aws:iam::960456129040:role/AWS_EKS_Admin"
-  timeout  = "20m"
   tags = {
     Name = "PEPOC-EKS-Cluster"
   }

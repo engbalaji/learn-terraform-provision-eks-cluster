@@ -5,7 +5,7 @@ resource "helm_release" "argocd" {
   repository = "https://argoproj.github.io/argo-helm"
   namespace  = "argocd-poc"
   timeout    = 1200
-  values     = [templatefile("./argocd/install.yaml", {})]
+  values     = "https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml"
   # Set any desired values or leave them as default
 }
 
