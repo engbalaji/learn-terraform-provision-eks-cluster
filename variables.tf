@@ -34,7 +34,7 @@ variable "timeout_seconds" {
 variable "admin_password" {
   description = "Default Admin Password"
   type        = string
-  default     = ""
+  default     = "Welcome#77"
 }
 
 variable "values_file" {
