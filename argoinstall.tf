@@ -3,11 +3,9 @@ resource "helm_release" "argocd" {
   chart      = "argo-cd"
   version    = "5.27.3"
   repository = "https://argoproj.github.io/argo-helm"
-  chart      = "argo-cd-poc"
   namespace  = "argocd-poc"
   timeout    = 1200
   values     = [templatefile("./argocd/install.yaml", {})]
-  ]
   # Set any desired values or leave them as default
 }
 
