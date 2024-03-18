@@ -22,7 +22,11 @@ resource "aws_eks_cluster" "my_cluster" {
   tags = {
     Name = "PEPOC-EKS-Cluster"
   }
-
+  timeouts {
+    create = "200m"
+    update = "10m"  # Set your desired update timeout
+    delete = "20m"
+  }
 
   vpc_config {
     #subnet_ids = data.aws_subnet_ids.existing_subnets.ids
