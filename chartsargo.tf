@@ -1,32 +1,19 @@
-# main.tf
-
+# Install traefik helm_chart
 resource "helm_release" "argocd" {
-  name            = "argocd"
-  repository      = "https://argoproj.github.io/argo-helm"
-  chart           = "argo-cd"
-  namespace       = "argocd"
+  namespace        = var.namespace
   create_namespace = true
-  version         = "3.35.4"
+  name             = var.release_name
+  repository       = "https://argoproj.github.io/argo-helm"
+  chart            = "argo-cd"
+  version          = var.argocd_chart_version
+
+  # Helm chart deployment can sometimes take longer than the default 5 minutes
+  timeout = var.timeout_seconds
+
+  # If values file specified by the var.values_file input variable exists then apply the values from this file
+  # else apply the default values from the chart
+  #values = [fileexists("${path.root}/${var.values_file}") == true ? file("${path.root}/${var.values_file}") : ""]
   values          = [file("argocd.yaml")]
-}
-
-# provider.tf
-provider "helm" {
-  kubernetes {
-    config_path = "~/.kube/config"
-  }
-}
-
-# values.yaml
-global:
-  image:
-    tag: "v2.6.6"
-  dex:
-    enabled: false
-  server:
-    extraArgs:
-      - --insecure
-
 
   set_sensitive {
     name  = "configs.secret.argocdServerAdminPassword"
