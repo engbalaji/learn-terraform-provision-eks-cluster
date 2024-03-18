@@ -5,7 +5,7 @@ resource "helm_release" "argocd" {
   name             = var.release_name
   repository       = "https://argoproj.github.io/argo-helm"
   chart            = "argo-cd"
-  version          = var.argocd_chart_version
+  version          = "3.35.4"
 
   # Helm chart deployment can sometimes take longer than the default 5 minutes
   timeout = var.timeout_seconds
