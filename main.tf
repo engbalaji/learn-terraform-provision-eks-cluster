@@ -23,7 +23,7 @@ resource "aws_eks_cluster" "my_cluster" {
     Name = "PEPOC-EKS-Cluster"
   }
   timeouts {
-    create = "200m"
+    create = "20m"  # Set your desired create timeoutm"
     update = "10m"  # Set your desired update timeout
     delete = "20m"
   }
