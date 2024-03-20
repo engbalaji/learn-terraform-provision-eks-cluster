@@ -22,17 +22,19 @@ resource "aws_eks_cluster" "my_cluster" {
   tags = {
     Name = "PEPOC-EKS-Cluster"
   }
-  timeouts {
-    create = "20m"  # Set your desired create timeoutm"
-    update = "10m"  # Set your desired update timeout
-    delete = "20m"
-  }
 
   vpc_config {
     #subnet_ids = data.aws_subnet_ids.existing_subnets.ids
     security_group_ids = [data.aws_security_group.existing_sg.id]
     subnet_ids = ["subnet-89eb03a4", "subnet-c496e7e9", "subnet-b64d14ff" ]
   }
+  
+  timeouts {
+  create = "20m"  # Set your desired create timeoutm"
+  update = "10m"  # Set your desired update timeout
+  delete = "20m"
+  }
+
 }
 
 #create node group 1
@@ -50,7 +52,7 @@ resource "aws_eks_node_group" "example_nodes" {
     min_size     = 1
 
   }
-  
+
   remote_access {
     ec2_ssh_key = "Balaji Mariyappan"
   }
